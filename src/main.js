@@ -37,7 +37,6 @@ Apify.main(async () => {
 
     // persist state
     setInterval(async () => {
-        const totalCount = state.toStart.length;
         const started = Object.keys(state.started).length;
         log.info(`Progress: ${started}/${state.toStart.length}`);
         log.info(`Success: ${state.success}/${state.toStart.length}`);
