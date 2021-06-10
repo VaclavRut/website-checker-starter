@@ -1,0 +1,7 @@
+{
+	"name": "web-checker-starter",
+	"version": "0.0",
+	"buildTag": "latest",
+	"env": null,
+	"template": "example_hello_world"
+}

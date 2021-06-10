@@ -1,0 +1,15 @@
+{
+  "title": "Input schema for the hello_word actor.",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "startUrls": {
+      "title": "Start URLs",
+      "type": "array",
+      "prefill": [ "http://idnes.cz/", "https://news.ycombinator.com/"],
+      "description": "Enter array of strings.",
+      "editor": "json"
+    }
+  },
+  "required": ["startUrls"]
+}
