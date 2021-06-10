@@ -10,10 +10,10 @@ async function startRuns(state, actId) {
         if (state.running <= 10 && !state.started[item]) {
             const info = await Apify.call(actId, inputTemplate(item), { waitSecs: 5 });
             state.started[item] = info;
-            log.info(`Started run id ${info.id}`);
+            log.info(`Started run id ${info.id} for ${item}`);
             await Apify.utils.sleep(1 * 1000);
             state.running++;
-        } break;
+        }
     }
 }
 
@@ -39,7 +39,8 @@ Apify.main(async () => {
     setInterval(async () => {
         const totalCount = state.toStart.length;
         const started = Object.keys(state.started).length;
-        log.info(`Progress: ${started}/${totalCount}`);
+        log.info(`Progress: ${started}/${state.toStart.length}`);
+        log.info(`Success: ${state.success}/${state.toStart.length}`);
         await Apify.setValue('STATE', state);
         log.info('Saved state');
     }, 30 * 1000);
@@ -49,7 +50,6 @@ Apify.main(async () => {
     await startRuns(state, actId);
 
     let allFinished = false;
-    const totalCount = state.toStart.length;
     // Wait if everything has finished
     while (!allFinished) {
         allFinished = true;
@@ -75,8 +75,6 @@ Apify.main(async () => {
                 await startRuns(state, actId);
             }
         }
-
-        log.info(`Success: ${state.success}/${totalCount}`);
         await Apify.utils.sleep(5 * 1000);
     }
     log.info('Done');
