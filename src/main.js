@@ -63,7 +63,7 @@ Apify.main(async () => {
                 output.url = key;
                 output.detailedOutput = `https://api.apify.com/v2/key-value-stores/${run.defaultKeyValueStoreId}/records/DETAILED-OUTPUT`;
                 output.simplifiedOutput = `https://api.apify.com/v2/key-value-stores/${run.defaultKeyValueStoreId}/records/OUTPUT`;
-                output.kvStore = run.defaultKeyValueStoreId;
+                output.kvStore = `https://api.apify.com/v2/key-value-stores/${run.defaultKeyValueStoreId}/`;
                 output.runStatus = run.status;
                 await Apify.pushData(output);
                 state.success++;
