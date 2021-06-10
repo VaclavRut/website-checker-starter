@@ -1,4 +1,4 @@
-const inputTemplate = (startUrl) => {
+const inputTemplate = (startUrl, type, proxyConfiguration, maxPagesPerCrawl, maxConcurrency, saveSnapshots) => {
     return ({
         startUrls: [
             {
@@ -6,7 +6,7 @@ const inputTemplate = (startUrl) => {
                 method: 'GET',
             },
         ],
-        type: 'cheerio',
+        type,
         linkSelector: 'a',
         pseudoUrls: [
             {
@@ -14,15 +14,13 @@ const inputTemplate = (startUrl) => {
                 method: 'GET',
             },
         ],
-        proxyConfiguration: {
-            useApifyProxy: true,
-        },
-        maxPagesPerCrawl: 400,
-        maxConcurrency: 10,
+        proxyConfiguration,
+        maxPagesPerCrawl,
+        maxConcurrency,
         headfull: false,
         useChrome: false,
         useGoogleBotHeaders: false,
-        saveSnapshots: true,
+        saveSnapshots,
     });
 };
 module.exports = { inputTemplate };

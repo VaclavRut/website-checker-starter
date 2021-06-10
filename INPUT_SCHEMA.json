@@ -9,6 +9,41 @@
       "prefill": [ "http://idnes.cz/", "https://news.ycombinator.com/"],
       "description": "Enter array of strings.",
       "editor": "json"
+    },
+    "type": {
+      "title": "Type of Crawler",
+      "type": "string",
+      "description": "Which type of SDK Crawler will be used",
+      "enum": ["cheerio", "puppeteer"],
+      "default": "cheerio"
+    },
+    "proxyConfiguration": {
+      "title": "Proxy configuration",
+      "type": "object",
+      "description": "Specifies proxy servers that will be used by the scraper in order to hide its origin.<br><br>For details, see <a href='https://apify.com/apify/web-scraper#proxy-configuration' target='_blank' rel='noopener'>Proxy configuration</a> in README.",
+      "prefill": { "useApifyProxy": false },
+      "default": {},
+      "editor": "proxy"
+    },
+    "maxPagesPerCrawl": {
+      "title": "Max pages per run",
+      "type": "integer",
+      "description": "The maximum number of pages that the scraper will load. The scraper will stop when this limit is reached. It's always a good idea to set this limit in order to prevent excess platform usage for misconfigured scrapers. Note that the actual number of pages loaded might be slightly higher than this value.<br><br>If set to <code>0</code>, there is no limit.",
+      "minimum": 0,
+      "default": 400
+    },
+    "maxConcurrency": {
+      "title": "Max concurrency",
+      "type": "integer",
+      "description": "Specified the maximum number of pages that can be processed by the scraper in parallel. The scraper automatically increases and decreases concurrency based on available system resources. This option enables you to set an upper limit, for example to reduce the load on a target website.",
+      "minimum": 1,
+      "default": 20
+    },
+    "saveSnapshots": {
+      "title": "Save Snapshots",
+      "type": "boolean",
+      "description": "Will save HTML for Cheerio and HTML + screenshot for Puppeteer",
+      "default": true
     }
   },
   "required": ["startUrls"]

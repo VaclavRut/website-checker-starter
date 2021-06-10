@@ -8,7 +8,7 @@ async function startRuns(state, actId) {
     // Start runs
     for (const item of state.toStart) {
         if (state.running <= 10 && !state.started[item]) {
-            const info = await Apify.call(actId, inputTemplate(item), { waitSecs: 5 });
+            const info = await Apify.call(actId, inputTemplate(item, type, proxyConfiguration, maxPagesPerCrawl, maxConcurrency, saveSnapshots), { waitSecs: 5 });
             state.started[item] = info;
             log.info(`Started run id ${info.id} for ${item}`);
             await Apify.utils.sleep(1 * 1000);
@@ -20,7 +20,7 @@ async function startRuns(state, actId) {
 Apify.main(async () => {
     const actId = 'lukaskrivka/website-checker';
     const input = await Apify.getValue('INPUT');
-    const { startUrls } = input;
+    const { startUrls, type, proxyConfiguration, maxPagesPerCrawl, maxConcurrency, saveSnapshots } = input;
 
     const state = input.state || await Apify.getValue('STATE') || {
         started: {},
@@ -46,7 +46,7 @@ Apify.main(async () => {
 
     log.info(`Got ${state.toStart.length} runs to start`);
     // initial starting
-    await startRuns(state, actId);
+    await startRuns(state, actId, type, proxyConfiguration, maxPagesPerCrawl, maxConcurrency, saveSnapshots);
 
     let allFinished = false;
     // Wait if everything has finished
@@ -71,7 +71,7 @@ Apify.main(async () => {
                 state.started[key].run = run;
                 state.running--;
                 // start more
-                await startRuns(state, actId);
+                await startRuns(state, actId, type, proxyConfiguration, maxPagesPerCrawl, maxConcurrency, saveSnapshots);
             }
         }
         await Apify.utils.sleep(5 * 1000);
