@@ -4,7 +4,7 @@ const { inputTemplate } = require('./consts');
 const { log } = Apify.utils;
 const client = Apify.newClient();
 
-async function startRuns(state, actId) {
+async function startRuns(state, actId, type, proxyConfiguration, maxPagesPerCrawl, maxConcurrency, saveSnapshots) {
     // Start runs
     for (const item of state.toStart) {
         if (state.running <= 10 && !state.started[item]) {
